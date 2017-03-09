@@ -10,10 +10,12 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   sensor_msgs
 )
+find_package(PCL 1.3 REQUIRED)
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
 
+#find_package(PCL 1.3 REQUIRED COMPONENTS common io)
 
 ## Uncomment this if the package has a setup.py. This macro ensures
 ## modules and global scripts declared therein get installed
@@ -101,10 +103,11 @@ find_package(catkin REQUIRED COMPONENTS
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-#  INCLUDE_DIRS include
+ # INCLUDE_DIRS include
 #  LIBRARIES turtlebot_pcl
-#  CATKIN_DEPENDS pcl_conversions pcl_ros roscpp sensor_msgs
-#  DEPENDS system_lib
+  CATKIN_DEPENDS pcl_conversions pcl_ros roscpp sensor_msgs
+  DEPENDS system_lib
+
 )
 
 ###########
@@ -116,8 +119,10 @@ catkin_package(
 # include_directories(include)
 include_directories(
   ${catkin_INCLUDE_DIRS}
-)
+  SYSTEM ${PCL_INCLUDE_DIRS})
 
+link_directories(${PCL_LIBRARY_DIRS})
+add_definitions(${PCL_DEFINITIONS})
 ## Declare a C++ library
 # add_library(turtlebot_pcl
 #   src/${PROJECT_NAME}/turtlebot_pcl.cpp
@@ -188,4 +193,8 @@ include_directories(
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
 add_executable(example src/example.cpp)
+add_executable(example_sift_normal_keypoint_estimation src/example_sift_normal_keypoint_estimation.cpp)
+add_executable(pcd_write src/pcd_write.cpp)
 target_link_libraries(example ${catkin_LIBRARIES})
+target_link_libraries(example_sift_normal_keypoint_estimation ${PCL_LIBRARIES})
+target_link_libraries(pcd_write ${PCL_LIBRARIES})
