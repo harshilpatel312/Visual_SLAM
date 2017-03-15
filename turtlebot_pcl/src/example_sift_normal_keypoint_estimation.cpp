@@ -57,7 +57,7 @@
 int
 main(int, char** argv)
 {
-  std::string filename = "/home/harshil/CSite1_orig-utm.pcd";
+  std::string filename = "/home/harshil/arn_ws/pointclouds/CSite4_orig-utm.pcd";
   std::cout << "Reading " << filename << std::endl;
   pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_xyz (new pcl::PointCloud<pcl::PointXYZ>);
   if(pcl::io::loadPCDFile<pcl::PointXYZ> (filename, *cloud_xyz) == -1) // load the file
